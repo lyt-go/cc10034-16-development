@@ -16,6 +16,7 @@
 │   └── vite.config.ts        dev server 配置（open: false）
 ├── backend/                  FastAPI（Python） 后端
 │   ├── app/routers/resource.py  通用查询/导出/登记/动作接口
+│   ├── app/routers/deploy_rollback.py  策略回滚预览/确认与覆盖范围接口
 │   ├── app/services/<key>.py    每个模块独立领域逻辑
 │   ├── app/services/base.py     共享服务骨架
 │   └── app/store.py          内存数据仓库与示例数据
@@ -76,6 +77,22 @@ npm run dev
   `frontend/src/domain/<模块>.ts`，用于承载真实业务差异并维持36题位容量。
 - 列表接口统一返回 `{ items, total, page, size }`，动作接口统一返回 `{ ok, message }`。
 - 状态流转只允许在 `app/services` 里改，路由层不做业务判断。
+
+## 策略回滚预览与确认
+
+策略下发工作台在确认回滚前可以先比较资源覆盖范围：
+
+- `POST /api/deploy_policy/{id}/rollback/preview`：服务端比较当前与目标版本的
+  节点×资源覆盖，生成回滚差异单（恢复可见/保持不变/仅当前版本覆盖），并标出与
+  当前分级冲突的恢复项；预览不改变任何实际覆盖。
+- `POST /api/deploy_policy/{id}/rollback/confirm`：执行差异单，执行时按当前分级
+  重新校验——目标版本的覆盖与当前分级冲突时，已失去的可见性不能通过回滚恢复。
+  执行回执按节点区分 恢复/未动/未能恢复；重复提交（重试、交错确认）能识别
+  此前已处理的部分，不产生重复变更。
+- `GET /api/deploy_policy/{id}/coverage` 与 `/coverage/history`：当前覆盖与
+  历史下发的覆盖记录（回滚后仍可查看）。
+- `GET /api/classify_tag/coverage`：分级分类视角的当前覆盖，只反映真正执行的
+  回滚；`POST /api/classify_tag/{id}/level` 调整数据资源安全等级。
 
 领域：数据工程
 子方向：数据分析与数据应用

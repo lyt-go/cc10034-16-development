@@ -29,3 +29,21 @@ class EntryPayload(BaseModel):
 class ActionPayload(BaseModel):
     action: str
     remark: str | None = None
+
+
+class RollbackPreviewPayload(BaseModel):
+    """回滚预览入参：缺省时取策略记录上的回滚版本。"""
+
+    目标版本: str | None = None
+
+
+class RollbackConfirmPayload(BaseModel):
+    """回滚确认入参：执行指定预览生成的回滚差异单，可重复提交。"""
+
+    ticket_id: int
+
+
+class LevelAdjustPayload(BaseModel):
+    """分级标签安全等级调整入参。"""
+
+    安全等级: str

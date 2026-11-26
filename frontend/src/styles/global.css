@@ -70,3 +70,23 @@ body { margin: 0; background: #f6f8fb; color: #1f2937; }
 .analysis-chart { display: flex; align-items: flex-end; gap: 8px; height: 160px; padding: 12px 0; }
 .analysis-bar { flex: 1; border-radius: 4px 4px 0 0; background: var(--brand); min-width: 24px; position: relative; transition: height 0.4s; }
 .analysis-bar span { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--muted); white-space: nowrap; }
+/* 策略回滚与覆盖范围 */
+.coverage-panel { margin-top: 14px; background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+.coverage-panel h3 { margin: 0 0 8px; font-size: 14px; }
+.coverage-panel h4 { margin: 0 0 6px; font-size: 13px; }
+.coverage-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.node-chips { display: inline-flex; gap: 4px; flex-wrap: wrap; }
+.node-chip { background: #eef4ff; color: var(--brand); border-radius: 4px; padding: 1px 6px; font-size: 12px; }
+.muted-text { color: var(--muted); font-size: 12px; }
+.rollback-modal { width: min(860px, 100%); }
+.conflict-text { color: #b42318; font-weight: 600; }
+.result-已恢复 { color: #15803d; }
+.result-未能恢复 { color: #b42318; }
+.result-未动 { color: var(--muted); }
+.receipt-list { margin-top: 10px; }
+.receipt-card { border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin-bottom: 8px; }
+.receipt-head { margin: 0 0 6px; font-size: 12px; color: var(--muted); }
+.receipt-node { display: flex; flex-direction: column; gap: 2px; font-size: 13px; margin-bottom: 6px; }
+.receipt-group { color: var(--muted); }
+.receipt-group.ok { color: #15803d; }
+.receipt-group.bad { color: #b42318; }
